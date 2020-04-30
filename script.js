@@ -2,29 +2,11 @@
 var h1El = document.createElement('h1');
 var pEl = document.createElement('p');
 var beginBtnEl = document.createElement('button');
-var h2El = document.createElement('h2');
-var answerOneBtnEl = document.createElement('button');
-var answerTwoBtnEl = document.createElement('button');
-var answerThreeBtnEl = document.createElement('button');
-var answerFourBtnEl = document.createElement('button');
-var pointsCounter = document.createElement('p');
-var timerEl = document.createElement('p');
 
 h1El.setAttribute('class', 'h1; text-center');
 pEl.setAttribute('class', 'text-center');
-timerEl.setAttribute('class', 'text-center');
 beginBtnEl.setAttribute('class', 'btn; btn-success');
 beginBtnEl.setAttribute('type', 'button');
-h2El.setAttribute('class', 'h2, text-center');
-answerOneBtnEl.setAttribute('class', 'btn btn-info mx-1');
-answerOneBtnEl.setAttribute('type', 'button');
-answerTwoBtnEl.setAttribute('class', 'btn btn-info mx-1');
-answerTwoBtnEl.setAttribute('type', 'button');
-answerThreeBtnEl.setAttribute('class', 'btn btn-info mx-1');
-answerThreeBtnEl.setAttribute('type', 'button');
-answerFourBtnEl.setAttribute('class', 'btn btn-info mx-1');
-answerFourBtnEl.setAttribute('type', 'button');
-pointsCounter.setAttribute('class', 'text-center');
 
 h1El.textContent = 'Welcome to Quiz.JS!';
 pEl.textContent = 'Click the button below to get started.';
@@ -96,13 +78,34 @@ beginBtnEl.addEventListener('click', function () {
 
 //initializes questions
 function initQuestions() {
-    //seconds for uiz
+    //creates necessary elements
+    var h2El = document.createElement('h2');
+    var answerOneBtnEl = document.createElement('button');
+    var answerTwoBtnEl = document.createElement('button');
+    var answerThreeBtnEl = document.createElement('button');
+    var answerFourBtnEl = document.createElement('button');
+    var pointsCounter = document.createElement('p');
+    var timerEl = document.createElement('p');
+    //sets classes for necessary elements
+    timerEl.setAttribute('class', 'text-center');
+    timerEl.setAttribute('class', 'text-center');
+    beginBtnEl.setAttribute('class', 'btn; btn-success');
+    beginBtnEl.setAttribute('type', 'button');
+    h2El.setAttribute('class', 'h2, text-center');
+    answerOneBtnEl.setAttribute('class', 'btn btn-info mx-1');
+    answerOneBtnEl.setAttribute('type', 'button');
+    answerTwoBtnEl.setAttribute('class', 'btn btn-info mx-1');
+    answerTwoBtnEl.setAttribute('type', 'button');
+    answerThreeBtnEl.setAttribute('class', 'btn btn-info mx-1');
+    answerThreeBtnEl.setAttribute('type', 'button');
+    answerFourBtnEl.setAttribute('class', 'btn btn-info mx-1');
+    answerFourBtnEl.setAttribute('type', 'button');
+    pointsCounter.setAttribute('class', 'text-center');
+    //seconds for quiz
     var timeLeft = 30;
     //interval that allows us to move to next question
     var i = 0;
-    //calls next question function
     nextQuestion();
-
     //adds points counter
     var points = 0;
     colFour.appendChild(pointsCounter);
@@ -202,7 +205,7 @@ function initQuestions() {
         initialsInput.setAttribute('type', 'text');
         initialsInput.setAttribute('class', 'ml-3');
         initialsForm.appendChild(initialsInput);
-
+        //creates store scoring functionality
         var scores = [];
         var initials = [];
         var storedScores = JSON.parse(localStorage.getItem('scores'));
@@ -217,6 +220,36 @@ function initQuestions() {
             initials = storedInitials;
         }
 
+        var table = document.createElement('table');
+        table.setAttribute('class', 'table');
+        colFour.appendChild(table);
+        var tHead = document.createElement('thead');
+        table.appendChild(tHead);
+        var tHeadRow = document.createElement('tr');
+        tHead.appendChild(tHeadRow);
+        var initialsHeading = document.createElement('th');
+        initialsHeading.setAttribute('scope', 'col');
+        initialsHeading.innerHTML = 'Initials';
+        tHead.appendChild(initialsHeading);
+        var scoresHeading = document.createElement('th');
+        scoresHeading.setAttribute('scope', 'col');
+        scoresHeading.innerHTML = 'Scores';
+        tHead.appendChild(scoresHeading);
+        var tBody = document.createElement('tbody');
+        table.appendChild(tBody);
+        //loop score and initials array to create table
+        for (var x = 0; x < scores.length; x++) {
+            var tRow = document.createElement('tr');
+            tBody.appendChild(tRow);
+            var tdi = document.createElement('td');
+            tdi.innerHTML = initials[x];
+            tRow.appendChild(tdi);
+            var tds = document.createElement('td');
+            tds.innerHTML = scores[x];
+            tRow.appendChild(tds);
+        }
+
+
         initialsInput.addEventListener('keypress', function (event) {
             if (event.keyCode == 13) {
                 event.preventDefault();
@@ -228,11 +261,11 @@ function initQuestions() {
                 initials.push(initialsText);
                 initialsInput.value = '';
                 scores.push(points);
-
                 localStorage.setItem('scores', JSON.stringify(scores));
                 localStorage.setItem('initials', JSON.stringify(initials));
                 console.log(scores);
                 console.log(initials);
+                location.reload();
             }
         });
     };
