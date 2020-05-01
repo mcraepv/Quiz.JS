@@ -64,6 +64,66 @@ var questions = [
             'Myvariable'
         ],
         c: 'myVariable'
+    },
+    {
+        q: 'What is does DOM stand for?',
+        a: [
+            'Document Object Model',
+            'Defense Ordinance Mandate',
+            'Declaratory Offer Model',
+            'none of the above'
+        ],
+        c: 'Document Object Model'
+    },
+    {
+        q: 'jQuery is to JavaScript as _____ is to HTML.',
+        a: [
+            'CSS',
+            'XML',
+            'PHP',
+            'Bootstrap'
+        ],
+        c: 'Bootstrap'
+    },
+    {
+        q: 'What characters are an object surrounded in?',
+        a: [
+            'curly brackets {}',
+            'parentheses ()',
+            'square brackets []',
+            'none of the above'
+        ],
+        c: 'curly brackets {}'
+    },
+    {
+        q: 'How would you execute an action upon a click?',
+        a: [
+            '.listenForEvent();',
+            '.addEventListener();',
+            '.addListener();',
+            '.listenFor();'
+        ],
+        c: '.addEventListener();'
+    },
+    {
+        q: 'How would you create a div using only JavaScript?',
+        a: [
+            'document.makeElement(\'div\')',
+            'document.element(\'div\')',
+            'document.createElement(\'div\')',
+            'document.el(\'div\')'
+        ],
+        c: 'document.createElement(\'div\')'
+    },
+    {
+        q: 'Where was JavaScript invented?',
+        a: [
+            'Google',
+            'Microsoft',
+            'Netscape',
+            'Mozilla'
+        ],
+        c: 'Netscape'
     }
 ];
 
@@ -171,12 +231,12 @@ function initQuestions() {
                     setTimeout(nextQuestion, 500);
                 } else if (userAnswer !== questions[i].c) {
                     element.setAttribute('class', 'btn btn-danger mx-1');
-                    if (timeLeft > 5) {
+                    if (timeLeft >= 6) {
                         timeLeft = timeLeft - 5;
                         this.removeEventListener('click', check);
                         i++;
                         setTimeout(nextQuestion, 500);
-                    } else { endScreen }
+                    } else { endScreen() }
                 };
             };
         });
